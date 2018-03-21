@@ -1,0 +1,21 @@
+
+This file contains a scattering of thoughts and notes of things that were
+done or that need to be done/documented.
+
+
+
+* To get UART working on Raspi3 (and zeroW)
+  https://www.circuits.dk/setup-raspberry-pi-3-gpio-uart/
+  The uart for these pi's is used primarily for bluetooth, so we need to enable and switch which uart port is used. (I think we also need to disable the console stuff since that uses the uart port by default.)
+
+  (another reference, probablly should use this next time:)
+  https://www.raspberrypi.org/documentation/configuration/uart.md
+
+
+
+
+* Forth GPIO control:
+  omode-pp PB12 io-mode!
+  PB12 ioc! \ clear
+  PB12 ios! \ set
+  PB12 iox! \ xor

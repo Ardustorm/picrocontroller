@@ -1,0 +1,84 @@
+
+#+Title: Easy Robotic Platform for Teaching Programming
+#+Author: Luke Thompson and John Thomsen
+# #+Author: John Thomsen
+
+
+*  Overview
+  Our goal is to provide a simple robotic platform that can allow people to focus on learning programming, without a background in hardware. This platform will consist of a higher level computer (namely a raspberry pi zero W) which will allow users to develop code in a familiar environment and without the constraints usually imposed when developing for microcontrollers. The raspberry pi will be paired with a microcontroller that will be responsible for handling low level (things TODO) such as controling motors, keeping track of encoders, interupts, etc. Our platform will consist of a microcontroller and motor driver pairing as well as the software needed to program and control the system (TODO: wording).
+
+  # Maybe add an image of the idea here? TODO: talk about / improve image
+# #+BEGIN_SRC PLANT_UML
+# @startuml
+# package "Microcontroller" {
+#  (sten) 
+# }
+
+# package "Computer" {
+
+#   interface (python library) as py
+#   interface  (communicate with hardware) as hw
+  
+#   hw <--> Microcontroller
+#   py <--> hw
+# }
+ 
+# :User: -> py
+# @enduml
+# #+END_SRC
+
+
+
+
+
+  
+* List of Planned features
+
+  Below is a list of the features we plan to support. The list may change as we further develop the platform.
+
+  - Simple interface to sensors
+    - Line following
+    - Buttons
+    - Distance (Ultrasonic)
+    - Digital I/O
+    - Analog I/O
+    - Interrupts
+
+  - Interface with hardware
+    - led's
+    - lcd displays
+    - servos
+    - Digital Output (including PWM)
+    - Motors
+      - rotation count
+      - speed
+      - time
+      - distance (if robot dimensions are known)
+      - turning
+
+  - User Interface
+    - Programmable in python, through ssh
+      - Provide a simple class interface
+    - (potentially) provide an interactive/interpretive mode to allow for easy exploration of features
+    - Require the least amount of setup as possible (while still allowing flexibility in the future)
+
+
+
+
+* Current Approaches
+
+  We are currently planning to use a raspberry pi zero W as our main computer for a variety of reasons. The primary reasons are the large community supporting it and the low cost. In addition, since the rpi0W has wifi, it makes it really easy to connect to and control the robot without needing to be physically connected to it.
+
+  For the microcontroller, we are currently considering the stm32f103c for it's low cost, flexibility, and power. This microcontroller (the breakout board is often referred to as the "Blue Pill") runs at 72Mhz, has 64 kB flash, 20kB ram, and 37 gpio (many of which are 5V tolerant) [fn:stm32duino]. It's low cost makes it an appealing replacement for what has traditionally been an arduino Uno or Mega.
+
+
+  One option we are considering for the code running on the microcontroller is forth. Forth is a programming language developed in 1970 and provides an interactive developing environment, similar to python or javascript; allowing programmers to experiment as they go. Since forth is interpreted, it may be a very simple way for the computer to communicate with the microcontroller and off load some of it's tasks. Forth is not without it's drawbacks though. Forth is a stack-based language (think RPN) and can be confusing to new users since it uses a different paradigm then most modern languages. This can be mitigated by encapsulating all necessary operations in some interface in primary programming language (such as python) while still allowing flexibility for expansion later by the user or library without needing to reflash the microcontroller.
+
+  The alternative to forth is to program the microcontroller in C and develop a protocol for communicating between the computer and the microcontroller.
+
+
+
+
+
+* Footnotes
+[fn:stm32duino] http://wiki.stm32duino.com/index.php?title=STM32F103_boards

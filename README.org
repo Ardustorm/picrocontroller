@@ -1,0 +1,12 @@
+#+Title: Picrocontroller
+
+Picrocontroller is a python (and maybe C) library designed to simplify
+controling hardware from a computer (such as a raspberry pi) over serial.
+It currently utilizes an stm32 running the [[https://github.com/hexagon5un/hackaday-forth][Hackaday Edition of
+Mecrisp-Stellaris]], an implementation of forth. 
+
+
+* Goal
+  The eventual goal of this project is to create a system that makes it
+  easy for an individual to program and control a robot without needing
+  much experience with hardware.
