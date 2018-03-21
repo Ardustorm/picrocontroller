@@ -1,0 +1,6 @@
+
+uterm is my attempt at rewritting [[https://github.com/jeelabs/folie][folie]] in c. The plan is to
+support the same features while adding some additional features
+(such as logging of sessions).
+
+More information can be found at the top of the source file.
