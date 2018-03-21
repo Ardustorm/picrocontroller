@@ -1,5 +1,7 @@
 #+Title: Picrocontroller
 
+[[docs/media/blinking.gif][example of raspberry pi blinking an led on a stm32]]
+
 Picrocontroller is a python (and maybe C) library designed to simplify
 controling hardware from a computer (such as a raspberry pi) over serial.
 It currently utilizes an stm32 running the [[https://github.com/hexagon5un/hackaday-forth][Hackaday Edition of
