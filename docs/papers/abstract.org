@@ -4,7 +4,7 @@
 # #+Author: John Thomsen
 
 
-*  Overview`
+*  Overview
   Our goal is to provide a simple robotic platform that can allow people to focus on learning programming, without a background in hardware. This platform will consist of a higher level computer (namely a raspberry pi zero W) which will allow users to develop code in a familiar environment and without the constraints usually imposed when developing for microcontrollers. The raspberry pi will be paired with a microcontroller that will be responsible for handling low level (things TODO) such as controling motors, keeping track of encoders, interupts, etc. Our platform will consist of a microcontroller and motor driver pairing as well as the software needed to program and control the system (TODO: wording).
 
   # Maybe add an image of the idea here? TODO: talk about / improve image
