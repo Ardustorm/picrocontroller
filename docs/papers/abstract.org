@@ -1,10 +1,10 @@
 
-#+Title: Easy Robotic Platform for Teaching Programming
+#+Title: Simple Robotic Platform for Teaching Programming
 #+Author: Luke Thompson and John Thomsen
 # #+Author: John Thomsen
 
 
-*  Overview
+*  Overview`
   Our goal is to provide a simple robotic platform that can allow people to focus on learning programming, without a background in hardware. This platform will consist of a higher level computer (namely a raspberry pi zero W) which will allow users to develop code in a familiar environment and without the constraints usually imposed when developing for microcontrollers. The raspberry pi will be paired with a microcontroller that will be responsible for handling low level (things TODO) such as controling motors, keeping track of encoders, interupts, etc. Our platform will consist of a microcontroller and motor driver pairing as well as the software needed to program and control the system (TODO: wording).
 
   # Maybe add an image of the idea here? TODO: talk about / improve image
@@ -37,7 +37,7 @@
   Below is a list of the features we plan to support. The list may change as we further develop the platform.
 
   - Simple interface to sensors
-    - Line following
+    - Light Sensor
     - Buttons
     - Distance (Ultrasonic)
     - Digital I/O
@@ -57,9 +57,10 @@
       - turning
 
   - User Interface
-    - Programmable in python, through ssh
+    - Programmable in python
       - Provide a simple class interface
-    - (potentially) provide an interactive/interpretive mode to allow for easy exploration of features
+    - Live control of the Pi via SSH
+      - Provide an interactive/interpretive mode to allow for easy exploration of features
     - Require the least amount of setup as possible (while still allowing flexibility in the future)
 
 
