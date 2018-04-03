@@ -75,7 +75,7 @@
   The alternative to forth is to program the microcontroller in C and develop a protocol for communicating between the computer and the microcontroller. This protocol would need to support the features listed above and
 
 
-  We need a fast way for the computer (pi) to communicate with the microcontroller to allow real time (**) interactions. Initially we considered serial because of its simplicity, but usb may be a better option due to its faster bit rate. we plan to brainstorm and research communication methods further.
+  We need a fast way for the computer (pi) to communicate with the microcontroller to allow near real time interactions. Initially we considered serial because of its simplicity, but usb may be a better option due to its faster bit rate. we plan to brainstorm and research communication methods further.
  
   Another thing we plan to look into is other similar products or packages. There may be existing solutions that accomplish similar thing that we intend to research. Mico-python is just one example that may enable introductory programing experience.
 
