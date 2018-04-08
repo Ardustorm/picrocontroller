@@ -1,63 +1,94 @@
 import serial
-from time import sleep
+from time import sleep, time
 
 class Robot:
     GPIO_PP = "omode-pp"
     GPIO_ADC = "imode-ADC"
     GPIO_PWM = "omode-"
     freq = "1000"
-    
-    def __init__(self, term="/dev/ttyAMA0", baud=115200):
-        self.port = serial.Serial(term, baudrate= baud)
+
+    def __init__(self, term=None, baud=115200):
+
+        if(term == None):
+            self.port = self.trySerialPorts(baud)
+        else:
+            self.port = serial.Serial(term, baudrate= baud)
+            
+        # self.port.timeout=.1
         self.write("reset")
+        self.line="\0"
         sleep(.2)               # delay for microcontroller to reboot
+        self.read()
+
+
+    def trySerialPorts(self,baud):
+        serialPorts = ["/dev/ttyUSB0", "/dev/ttyACM0"]
+        for port in serialPorts:
+            try:
+                return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
+            except:
+                pass
 
     def write(self, txt):
         self.port.write( (txt + "\n").encode())
-        # TODO: fix this so it's more normal / acurate?
-        #  maybe combine with read?
-        sleep(len(txt) * .0005)
 
     def read(self):
         # Non blocking
         if self.port.in_waiting > 0:
             return self.port.read(self.port.in_waiting )
+        return b""
+
+    def sendCmd(self, txt):
+        self.write(txt)
+        return self.readLine()
+    
+    def readLine(self):
+        while ("\n" not in self.line):
+            self.line += self.port.read(max(1,self.port.in_waiting) ).decode('UTF-8')
+
+        lineList = self.line.split("\n")
+        self.line = lineList[-1]
+        return lineList[0]
         
     def setMode(self, pin, mode=GPIO_PP):
         # if mode == GPIO_ADC:
         #     serialport.write( freq, pin + " pwm-init")
         self.write( "omode-pp " + pin + " io-mode!")
+        self.readLine()
+
+
 
     def setPin(self, pin):
-        self.write( pin + " ios!")
-    
+        self.sendCmd( pin + " ios!")
+        
     def clearPin(self, pin):
-        self.write( pin + " ioc!")
+        self.sendCmd( pin + " ioc!")
 
     def togglePin(self, pin):
-        self.write( pin + " iox!")
+        self.sendCmd( pin + " iox!")
+
 
     def readPin(self, pin):
-        self.write( pin + " io@ .")
-        read = serialport.read()
-        print( "TODO: read: ", read)
-        return read != 0
+        ret =self.sendCmd( pin + " io@ .")
+        return ret[-6] == "1"
 
 
 r = Robot()
 
 r.setMode("pb12", r.GPIO_PP)
 i=0
-while True:
+t = time()
+while i < 100:
     r.togglePin("pb12")
-    print(".", end="", flush=True)
-    # sleep(.005)
+    sleep(.5)
+    r.readPin("pb12")
+    # if i == 100:
+    #     print(r.read())
+    #     i=0
+    #     exit()
 
-    if i == 100:
-        print(r.read())
-        i=0
-        exit()
-
-    
     i += 1
-
+    
+t = time() - t
+print("elapsed time: {} ".format(t))
+    
