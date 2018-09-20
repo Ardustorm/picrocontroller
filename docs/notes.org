@@ -19,3 +19,36 @@ done or that need to be done/documented.
   PB12 ioc! \ clear
   PB12 ios! \ set
   PB12 iox! \ xor
+
+
+* Getting stuff working
+  I started with the 'hackaday-forth' version from hexagon5un on github
+  but ran into issues getting it to work. I need to try again and figure
+  out what is the matter but currently, this is how I am able to get it
+  to work.
+
+  
+  I downloaded the latest version of mecrisp-stellaris from sourceforge
+  and used st-flash to erase, and then flash the microcontroller.
+
+  Then I tried to use the 'hackaday-includes.fs' file to include some of
+  the things, in the future this is the file that we would change to include
+  the things we need. but right now, I simply send the necessary files using
+  folie, as shown below.
+
+#+BEGIN_SRC bash
+  st-flash erase && st-flash write mecrisp-stellaris-stm32f103.bin 0x8000000
+
+  # in the 'core/embello/explore/1608-forth/flib/stm32f1' directory of
+  #  the hackaday-forth github distribution (and I think I had to add
+  #  the embello code myself) start folie and do the following.
+  folie -r
+
+  !send ../../../../../hackaday-includes.fs
+  compiletoflash
+  !send timer.fs
+  !send adc.fs
+  !send pwm.fs
+  cornerstone <<picrocontroller>>
+  compiletoram
+#+END_SRC

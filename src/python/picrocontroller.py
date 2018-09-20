@@ -1,6 +1,8 @@
 import serial
 from time import sleep, time
-
+import atexit
+# TODO next: analog, ultrasonic, interupts, pwm, i2c lcd
+# NOTES: should use atexit.register() to stop everything at end
 class Robot:
     GPIO_PP = "omode-pp"
     GPIO_ADC = "imode-ADC"
@@ -13,7 +15,9 @@ class Robot:
             self.port = self.trySerialPorts(baud)
         else:
             self.port = serial.Serial(term, baudrate= baud)
+
             
+        atexit.register(self.__exit__ ) # self.__del__
         # self.port.timeout=.1
         self.write("reset")
         self.line="\0"
