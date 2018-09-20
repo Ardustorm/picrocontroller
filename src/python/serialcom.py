@@ -15,33 +15,32 @@ class SerialCom:
             self.port = self.trySerialPorts(baud)
         else:
             self.port = serial.Serial(term, baudrate= baud)
-            
+        
+
         # self.port.timeout=.1
         self.write("reset")
         self.line="\0"
         sleep(.2)               # delay for microcontroller to reboot
         self.read()
-
+    
+    #un unsed finds all avalable ports (usefull for windows)
     def listSerialPorts(self):
-        if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        if sys.platform.startswith("linux") or sys.platform.startswith("cygwin"):
             # this excludes your current terminal "/dev/tty"
-            return glob.glob('/dev/tty[A-Za-z]*')
-        #untested
+            return glob.glob("/dev/tty[A-Za-z]*")
         #elif sys.platform.startswith('win'):
-        #    return ['COM%s' % (i + 1) for i in range(256)]
-        #elif sys.platform.startswith('darwin'):
-        #    return glob.glob('/dev/tty.*')
+        #    return ["COM%s" % (i + 1) for i in range(256)]
         else:
-            raise EnvironmentError('Unsupported platform')
+            raise EnvironmentError("Unsupported platform")
 
     def trySerialPorts(self,baud):
         serialPorts = ["/dev/ttyUSB0", "/dev/ttyACM0"]
         for port in serialPorts:
-            #try:
-            return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
-            #except:
-            #    pass
-
+            try:
+                return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
+            except:
+                pass
+        raise serial.SerialException("Device not found\n\ttested: "+str(serialPorts)) 
 
     def write(self, txt):
         self.port.write( (txt + "\n").encode())
