@@ -1,3 +1,13 @@
 
 This Library provides a basic python library for interacting with the
 microcontroller. (Currently it only supports Digital outputs).
+
+Enviomanet setup steps
+install python3
+	-sudo apt install python3
+install python package manager (pip3)
+	-sudo apt install pip3
+install pyserial
+	-pip3 install pyserial
+
+
