@@ -37,10 +37,11 @@ class SerialCom:
     def trySerialPorts(self,baud):
         serialPorts = ["/dev/ttyUSB0", "/dev/ttyACM0"]
         for port in serialPorts:
-            try:
-                return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
-            except:
-                pass
+            #try:
+            return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
+            #except:
+            #    pass
+
 
     def write(self, txt):
         self.port.write( (txt + "\n").encode())
