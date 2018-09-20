@@ -66,12 +66,17 @@ class SerialCom:
 def TestSerialCom():
     sc = SerialCom()
     t = time()
-    sc.send(".s")
-    while i < 100:
-        if i == 100:
-            print(sc.read())
-            exit()
-        i += 1
+    print(sc.sendCmd(".s"))
+    print(sc.sendCmd("1 2 5 18 432 42"))
+    print(sc.sendCmd(".s"))
+    print(sc.sendCmd("+ + + + +"))
+    print(sc.sendCmd(".s"))
+    print(sc.sendCmd("337 500"))
+    print(sc.sendCmd(".s"))
+    print(sc.sendCmd("+ +"))
+    print(sc.sendCmd(".s"))
+    
+
     t = time() - t
     print("elapsed time: {} ".format(t))
    

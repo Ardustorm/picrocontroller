@@ -17,7 +17,7 @@ class Robot:
             self.port = serial.Serial(term, baudrate= baud)
 
             
-        atexit.register(self.__exit__ ) # self.__del__
+        #atexit.register(self.__exit__ ) # self.__del__
         # self.port.timeout=.1
         self.write("reset")
         self.line="\0"
