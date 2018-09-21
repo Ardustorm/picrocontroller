@@ -1,9 +1,14 @@
 import serialcom
 
 class BoardFuncs():
+    GPIO_PP = "omode-pp"
+    GPIO_ADC = "imode-ADC"
+    GPIO_PWM = "omode-"
+    freq = "1000"
+    
     def __init__(self, openserialcom=None):
         if openserialcom==None:
-            self.serialcom = SerialCom()
+            self.serialcom = serialcom.SerialCom()
 
     def __repr__():
         return self.serialcom.__repr__()
