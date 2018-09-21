@@ -1,14 +1,13 @@
 import serialcom
 
-class BoardFuncs():
+class BoardFuncs(serialcom.SerialCom):
     GPIO_PP = "omode-pp"
     GPIO_ADC = "imode-ADC"
     GPIO_PWM = "omode-"
     freq = "1000"
     
-    def __init__(self, openserialcom=None):
-        if openserialcom==None:
-            self.serialcom = serialcom.SerialCom()
+    def __init__(self, term=None, baud=115200):
+        serialcom.SerialCom(term, baud)
 
     def __repr__():
         return self.serialcom.__repr__()
@@ -35,7 +34,7 @@ class BoardFuncs():
 
 def TestBoardFuncs():
     bf = BoardFuncs()
-    bf.setPinMode("pb12", r.GPIO_PP)
+    bf.setPinMode("pb12", bf.GPIO_PP)
     t = time()
     while i < 100:
         bf.togglePin("pb12")

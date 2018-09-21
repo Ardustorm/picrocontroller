@@ -3,26 +3,24 @@ import sys
 import glob
 from time import sleep, time
 
+SERIAL_PORTS = ["/dev/ttyUSB0", "/dev/ttyACM0"]
+
 class SerialCom:
-    GPIO_PP = "omode-pp"
-    GPIO_ADC = "imode-ADC"
-    GPIO_PWM = "omode-"
-    freq = "1000"
-
     def __init__(self, term=None, baud=115200):
-
-        if(term == None):
-            self.port = self.trySerialPorts(baud)
+        if term:
+            self.port = serial.Serial(term, baudrate=baud, timeout=0, writeTimeout=0)
         else:
-            self.port = serial.Serial(term, baudrate= baud)
-        
+            self.port = self.trySerialPorts(baud)
 
         # self.port.timeout=.1
         self.write("reset")
         self.line="\0"
         sleep(.2)               # delay for microcontroller to reboot
         self.read()
-    
+   
+    def __repr__(self):
+        return str(self.port)
+
     #un unsed finds all avalable ports (usefull for windows)
     def listSerialPorts(self):
         if sys.platform.startswith("linux") or sys.platform.startswith("cygwin"):
@@ -34,8 +32,7 @@ class SerialCom:
             raise EnvironmentError("Unsupported platform")
 
     def trySerialPorts(self,baud):
-        serialPorts = ["/dev/ttyUSB0", "/dev/ttyACM0"]
-        for port in serialPorts:
+        for port in SERIAL_PORTS:
             try:
                 return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
             except:
@@ -65,6 +62,7 @@ class SerialCom:
 
 def TestSerialCom():
     sc = SerialCom()
+    print(sc)
     t = time()
     print(sc.sendCmd(".s"))
     print(sc.sendCmd("1 2 5 18 432 42"))
@@ -79,7 +77,7 @@ def TestSerialCom():
 
     t = time() - t
     print("elapsed time: {} ".format(t))
-   
+
 if __name__ == "__main__":
     TestSerialCom()
 
