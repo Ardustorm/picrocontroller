@@ -40,7 +40,7 @@ class SerialCom:
                 return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
             except:
                 pass
-        raise serial.SerialException("Device not found\n\ttested: "+str(serialPorts)) 
+        raise serial.SerialException("--Device-Not-Found-- Tested: "+str(serialPorts)) 
 
     def write(self, txt):
         self.port.write( (txt + "\n").encode())
