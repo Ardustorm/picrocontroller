@@ -7,11 +7,10 @@ class BoardFuncs(serialcom.SerialCom):
     freq = "1000"
     
     def __init__(self, term=None, baud=115200):
-        serialcom.SerialCom(term, baud)
+        super().__init__(term, baud)
 
-    def __repr__():
-        return self.serialcom.__repr__()
-
+    def __repr__(self):
+        return super().__repr__()
 
     def setPinMode(self, pin, mode=GPIO_PP):
         # if mode == GPIO_ADC:
@@ -33,19 +32,21 @@ class BoardFuncs(serialcom.SerialCom):
         return ret[-6] == "1"
 
 def TestBoardFuncs():
+    import time #just for testing
+    
+    print("--Blink-LED-Test--\n")
+
     bf = BoardFuncs()
+    print(bf)
     bf.setPinMode("pb12", bf.GPIO_PP)
-    t = time()
+    t = time.time()
+    i=0
     while i < 100:
         bf.togglePin("pb12")
-        sleep(.5)
+        time.sleep(.5)
         bf.readPin("pb12")
-        # if i == 100:
-        #     print(bf.serialcom.read())
-        #     i=0
-        #     exit()
         i += 1
-    t = time() - t
+    t = time.time() - t
     print("elapsed time: {} ".format(t))
 
 

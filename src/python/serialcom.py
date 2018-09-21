@@ -1,21 +1,26 @@
 import serial
 import sys
 import glob
-from time import sleep, time
+import time
 
 SERIAL_PORTS = ["/dev/ttyUSB0", "/dev/ttyACM0"]
 
 class SerialCom:
+    port = None
+
     def __init__(self, term=None, baud=115200):
         if term:
             self.port = serial.Serial(term, baudrate=baud, timeout=0, writeTimeout=0)
         else:
             self.port = self.trySerialPorts(baud)
-
+        
+        if self.port == None:
+            raise serial.SerialException("--Device-Not-Found-- Tested: "+str(serialPorts)) 
+        
         # self.port.timeout=.1
         self.write("reset")
         self.line="\0"
-        sleep(.2)               # delay for microcontroller to reboot
+        time.sleep(.2)               # delay for microcontroller to reboot
         self.read()
    
     def __repr__(self):
@@ -37,7 +42,7 @@ class SerialCom:
                 return serial.Serial(port , baudrate=baud, timeout=0, writeTimeout=0) #ensure non-blocking
             except:
                 pass
-        raise serial.SerialException("--Device-Not-Found-- Tested: "+str(serialPorts)) 
+        return None
 
     def write(self, txt):
         self.port.write( (txt + "\n").encode())
@@ -63,7 +68,7 @@ class SerialCom:
 def TestSerialCom():
     sc = SerialCom()
     print(sc)
-    t = time()
+    t = time.time()
     print(sc.sendCmd(".s"))
     print(sc.sendCmd("1 2 5 18 432 42"))
     print(sc.sendCmd(".s"))
@@ -75,7 +80,7 @@ def TestSerialCom():
     print(sc.sendCmd(".s"))
     
 
-    t = time() - t
+    t = time.time() - t
     print("elapsed time: {} ".format(t))
 
 if __name__ == "__main__":
