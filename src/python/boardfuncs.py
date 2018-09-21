@@ -1,18 +1,43 @@
 import serialcom
+"""@package docstring
+boardfuncs.py module. resonsible for board levle functions
+    init,set,clear,toggle,read pins
+    PWM
+    ADC
 
+"""
 class BoardFuncs(serialcom.SerialCom):
+    """BoardFuncs inherits from SerialCom 
+        it relies on its methods and an reliable serial connection
+        could be changed to support another form of comunication
+    """
+    
+    #pin modes
     GPIO_PP = "omode-pp"
     GPIO_ADC = "imode-ADC"
     GPIO_PWM = "omode-"
-    freq = "1000"
-    
+
     def __init__(self, term=None, baud=115200):
+        """ sets up underlying serial connection
+            term is a string that specifies serial port 
+                if ommited serches through preset list (in serialcom.py)
+            baud is an number that specifyes baud rate of serial coonection
+            raises serialException if connection could not be established
+        """
         super().__init__(term, baud)
 
     def __repr__(self):
+        """prints information about underlaying serial connection
+
+        """
         return super().__repr__()
 
     def setPinMode(self, pin, mode=GPIO_PP):
+        """initializes the pins on the mcu
+            pin is a string that specifies the pin on the mcu
+            mode is a string that specifies pin mode (options are defined in the class)
+        """
+        
         # if mode == GPIO_ADC:
         #     serialport.write( freq, pin + " pwm-init")
         self.write( "omode-pp " + pin + " io-mode!")
@@ -31,28 +56,46 @@ class BoardFuncs(serialcom.SerialCom):
         ret =self.sendCmd( pin + " io@ .")
         return ret[-6] == "1"
 
-def TestBoardFuncs():
+    """PWM
+    TIM1:   PA8  PA9  PA10 PA11
+    TIM2:   PA0  PA1  PA2  PA3
+    TIM3:   PA6  PA7  PB0  PB1
+    TIM4:   PB6  PB7  PB8  PB9
+    
+    """
+    def initPWM(self, pin, freq=1):
+        self.send(str(freq) + " " + pin + "pwm-init")
+        self.readLine()
+
+def TestBoardFuncsLED():
     import time #just for testing
     
     print("--Blink-LED-Test--\n")
 
     bf = BoardFuncs()
     print(bf)
+    
+    #LED pin on one board
     bf.setPinMode("pb12", bf.GPIO_PP)
+    #LED pin on other board
+    bf.setPinMode("pc13", bf.GPIO_PP)
+
     t = time.time()
     i=0
-    while i < 100:
+    while i < 50:
         bf.togglePin("pb12")
+        bf.togglePin("pc13")
         time.sleep(.5)
-        bf.readPin("pb12")
+        print(bf.readPin("pb12"))
         i += 1
     t = time.time() - t
     print("elapsed time: {} ".format(t))
 
-
+def TestBoardFuncsPWM():
+    pass
 
 if __name__ == "__main__":
-    TestBoardFuncs()
+    TestBoardFuncsLED()
 
 
 
