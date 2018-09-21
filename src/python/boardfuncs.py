@@ -1,8 +1,8 @@
-import serialcom.py
+import serialcom
 
 class BoardFuncs():
-    def __init__(self, openserialcom=None)
-        if openserialcom=None:
+    def __init__(self, openserialcom=None):
+        if openserialcom==None:
             self.serialcom = SerialCom()
 
     def __repr__():
