@@ -11,6 +11,13 @@ VALID_PINS = ["pa" + str(i) for i in range(0,13)] \
 def isPin(pin):
     """returns True if pin is a vailid suported pin False otherwise """
     return pin in VALID_PINS
+def checkPin(pin):
+    """raies error on invalid pin"""
+    if not pin is str:
+        raise TypeError("pin must be a string")
+    if not isPin(pin):
+        raise ValueError("invalid pin: "+pin)
+
 
 class BoardFuncs(serialcom.SerialCom):
     """BoardFuncs inherits from SerialCom 
@@ -44,22 +51,27 @@ class BoardFuncs(serialcom.SerialCom):
             pin is a string that specifies the pin on the mcu
             mode is a string that specifies pin mode (options are defined in the class)
         """
-        
+        checkPin(pin)
+
         # if mode == GPIO_ADC:
         #     serialport.write( freq, pin + " pwm-init")
         self.write( "omode-pp " + pin + " io-mode!")
         self.readLine()
 
     def setPin(self, pin):
+        checkPin(pin)
         self.sendCmd( pin + " ios!")
         
     def clearPin(self, pin):
+        checkPin(pin)
         self.sendCmd( pin + " ioc!")
 
     def togglePin(self, pin):
+        checkPin(pin)
         self.sendCmd( pin + " iox!")
 
     def readPin(self, pin):
+        checkPin(pin)
         ret =self.sendCmd( pin + " io@ .")
         return ret[-6] == "1"
 
@@ -71,6 +83,7 @@ class BoardFuncs(serialcom.SerialCom):
     
     """
     def initPWM(self, pin, freq=1):
+        checkPin(pin)
         self.send(str(freq) + " " + pin + "pwm-init")
         self.readLine()
     
@@ -78,6 +91,7 @@ class BoardFuncs(serialcom.SerialCom):
         """sets PWM duty on pin at duty/10000
     
         """
+        checkPin(pin)
         self.send(str(duty) + " " + pin + "pwm")
 
 def TestBoardFuncsValidPins():
@@ -86,7 +100,11 @@ def TestBoardFuncsValidPins():
     print("pc13 valid: "+str(isPin("pc13")))
     print("pa400 valid: "+str(isPin("pa400")))
     print("42(int) valid: "+str(isPin(42)))
-
+    
+    #error test
+    #bf = BoardFuncs()
+    #bf.setPinMode("pa42")
+    #bf.setPinMode(1)
 
 def TestBoardFuncsLED():
     import time #just for testing
