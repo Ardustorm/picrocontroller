@@ -6,6 +6,12 @@ boardfuncs.py module. resonsible for board levle functions
     ADC
 
 """
+VALID_PINS = ["pa" + str(i) for i in range(0,13)] \
+           + ["pb" + str(i) for i in range(0,13)] + ["pc13","pc14"]
+def isPin(pin):
+    """returns True if pin is a vailid suported pin False otherwise """
+    return pin in VALID_PINS
+
 class BoardFuncs(serialcom.SerialCom):
     """BoardFuncs inherits from SerialCom 
         it relies on its methods and an reliable serial connection
@@ -31,6 +37,7 @@ class BoardFuncs(serialcom.SerialCom):
 
         """
         return super().__repr__()
+
 
     def setPinMode(self, pin, mode=GPIO_PP):
         """initializes the pins on the mcu
@@ -66,6 +73,20 @@ class BoardFuncs(serialcom.SerialCom):
     def initPWM(self, pin, freq=1):
         self.send(str(freq) + " " + pin + "pwm-init")
         self.readLine()
+    
+    def setPWM(self, pin, duty):
+        """sets PWM duty on pin at duty/10000
+    
+        """
+        self.send(str(duty) + " " + pin + "pwm")
+
+def TestBoardFuncsValidPins():
+    print("All valid pins:\n"+str(VALID_PINS))
+    print("pb12 valid: "+str(isPin("pb12")))
+    print("pc13 valid: "+str(isPin("pc13")))
+    print("pa400 valid: "+str(isPin("pa400")))
+    print("42(int) valid: "+str(isPin(42)))
+
 
 def TestBoardFuncsLED():
     import time #just for testing
@@ -95,6 +116,7 @@ def TestBoardFuncsPWM():
     pass
 
 if __name__ == "__main__":
+    TestBoardFuncsValidPins()
     TestBoardFuncsLED()
 
 
