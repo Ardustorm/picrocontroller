@@ -61,7 +61,7 @@ class SerialCom:
     def read(self):
         # Non blocking
         if self.port.in_waiting > 0:
-            return self.port.read(self.port.in_waiting).decode('UTF-8')
+            return self.port.read(self.port.in_waiting)
         return b""
 
     def sendCmd(self, txt):
