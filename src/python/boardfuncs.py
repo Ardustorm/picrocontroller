@@ -13,7 +13,7 @@ def isPin(pin):
     return pin in VALID_PINS
 def checkPin(pin):
     """raies error on invalid pin"""
-    if not pin is str:
+    if not type(pin) is str:
         raise TypeError("pin must be a string")
     if not isPin(pin):
         raise ValueError("invalid pin: "+pin)
@@ -83,10 +83,17 @@ class BoardFuncs(serialcom.SerialCom):
     
     """
     def initPWM(self, pin, freq=1):
+        """sets up PWM on a specifyed pin
+            freq is in Hz
+
+
+        """
+        
         checkPin(pin)
-        self.send(str(freq) + " " + pin + "pwm-init")
+        self.sendCmd(str(freq) + " " + pin + "pwm-init")
         self.readLine()
-    
+        self.setPWM(pin,0)
+
     def setPWM(self, pin, duty):
         """sets PWM duty on pin at duty/10000
     
@@ -95,11 +102,15 @@ class BoardFuncs(serialcom.SerialCom):
         self.send(str(duty) + " " + pin + "pwm")
 
 def TestBoardFuncsValidPins():
+    """ tests all the vaid pins are correctly identifyed
+    
+    """
+    
     print("All valid pins:\n"+str(VALID_PINS))
-    print("pb12 valid: "+str(isPin("pb12")))
-    print("pc13 valid: "+str(isPin("pc13")))
-    print("pa400 valid: "+str(isPin("pa400")))
-    print("42(int) valid: "+str(isPin(42)))
+    #print("pb12 valid: "+str(isPin("pb12")))
+    #print("pc13 valid: "+str(isPin("pc13")))
+    #print("pa400 valid: "+str(isPin("pa400")))
+    #print("42(int) valid: "+str(isPin(42)))
     
     #error test
     #bf = BoardFuncs()
@@ -131,11 +142,30 @@ def TestBoardFuncsLED():
     print("elapsed time: {} ".format(t))
 
 def TestBoardFuncsPWM():
-    pass
+    """ ramps LED to max brightness over 5 sec for 25 sec
+    
+    """
+    testPin = "pa8"
+    bf = BoardFuncs()
+    
+    
+    bf.initPWM(testPin)
+    i = 0
+    while i < 250:
+        bf.setPWM(testPin, (i*200)%10000)
+        sleep(.1)
+        if i%50 == 0:
+            print("PWM: min")
+        if i%50 == 25:
+            print("PWM: 1/2")
+        if i%50 == 45:
+            print("PWM: max")
+        i += 1
 
 if __name__ == "__main__":
     TestBoardFuncsValidPins()
     TestBoardFuncsLED()
+    #TestBoardFuncsPWM()
 
 
 
