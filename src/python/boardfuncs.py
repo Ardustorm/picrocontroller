@@ -6,11 +6,11 @@ boardfuncs.py module. resonsible for board levle functions
     ADC
 
 """
-VALID_PINS = ["pa" + str(i) for i in range(0,13)] \
-           + ["pb" + str(i) for i in range(0,13)] + ["pc13","pc14"]
+VALID_PINS = ["PA" + str(i) for i in range(0,13)] \
+           + ["PB" + str(i) for i in range(0,13)] + ["PC13","PC14"]
 def isPin(pin):
     """returns True if pin is a vailid suported pin False otherwise """
-    return pin in VALID_PINS
+    return pin.upper() in VALID_PINS
 def checkPin(pin):
     """raies error on invalid pin"""
     if not type(pin) is str:
@@ -29,6 +29,7 @@ class BoardFuncs(serialcom.SerialCom):
     GPIO_PP = "omode-pp"
     GPIO_ADC = "imode-ADC"
     GPIO_PWM = "omode-"
+    GPIO_IN = "omode-float"
 
     def __init__(self, term=None, baud=115200):
         """ sets up underlying serial connection
@@ -82,7 +83,7 @@ class BoardFuncs(serialcom.SerialCom):
     TIM4:   PB6  PB7  PB8  PB9
     
     """
-    def initPWM(self, pin, freq=1):
+    def initPWM(self, pin, freq=1000):
         """sets up PWM on a specifyed pin
             freq is in Hz
 
@@ -90,8 +91,7 @@ class BoardFuncs(serialcom.SerialCom):
         """
         
         checkPin(pin)
-        self.sendCmd(str(freq) + " " + pin + "pwm-init")
-        self.readLine()
+        self.sendCmd(str(freq) + " " + pin + " pwm-init")
         self.setPWM(pin,0)
 
     def setPWM(self, pin, duty):
@@ -99,7 +99,7 @@ class BoardFuncs(serialcom.SerialCom):
     
         """
         checkPin(pin)
-        self.send(str(duty) + " " + pin + "pwm")
+        self.sendCmd(str(duty) + " " + pin + " pwm")
 
 def TestBoardFuncsValidPins():
     """ tests all the vaid pins are correctly identifyed
@@ -145,28 +145,49 @@ def TestBoardFuncsPWM():
     """ ramps LED to max brightness over 5 sec for 25 sec
     
     """
-    testPin = "pa8"
+    import time
+
+    print("Start PWM Test")
+    testPin = "PA1"
     bf = BoardFuncs()
+    print(bf) 
     
+    #set LED pins to inputs
+    bf.setPinMode("PB12", bf.GPIO_IN)
+    bf.setPinMode("PC13", bf.GPIO_IN)
     
-    bf.initPWM(testPin)
+
+    bf.initPWM(testPin, 1000)
+    print("here")
     i = 0
-    while i < 250:
-        bf.setPWM(testPin, (i*200)%10000)
-        sleep(.1)
-        if i%50 == 0:
-            print("PWM: min")
-        if i%50 == 25:
-            print("PWM: 1/2")
-        if i%50 == 45:
-            print("PWM: max")
+    while i < 5:
         i += 1
+        print("PWM: min")
+        j = 0
+        while j < 10:
+            bf.setPWM(testPin, j*1000)
+            if j==5:
+                print("PWM: 1/2")
+            time.sleep(.1)
+            j += 1
+        print("PWM: max")
+        while j >= 0:
+            bf.setPWM(testPin, j*1000)
+            if j == 5:
+                print("PWM: 1/2")
+            time.sleep(.1)
+            j -= 1
+    print("PWM Test Done") 
 
 if __name__ == "__main__":
     TestBoardFuncsValidPins()
-    TestBoardFuncsLED()
-    #TestBoardFuncsPWM()
-
+    #TestBoardFuncsLED()
+    TestBoardFuncsPWM()
+    #print("Start PWM Test")
+    #testPin = "PA1"
+    #bf = BoardFuncs()
+    #bf.initPWM(testPin, 1000)
+    #bf.setPWM(testPin, 5000)
 
 
 
