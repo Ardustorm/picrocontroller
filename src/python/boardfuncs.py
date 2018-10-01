@@ -130,9 +130,9 @@ def TestBoardFuncsLED():
     print(bf)
     
     #LED pin on one board
-    bf.setPinMode("pb12", bf.GPIO_PP)
+    bf.setPinMode("pb12", GPIO_PP)
     #LED pin on other board
-    bf.setPinMode("pc13", bf.GPIO_PP)
+    bf.setPinMode("pc13", GPIO_PP)
 
     t = time.time()
     i=0
@@ -157,8 +157,8 @@ def TestBoardFuncsPWM():
     print(bf) 
     
     #set LED pins to inputs
-    bf.setPinMode("PB12", bf.GPIO_IN)
-    bf.setPinMode("PC13", bf.GPIO_IN)
+    bf.setPinMode("PB12", GPIO_IN)
+    bf.setPinMode("PC13", GPIO_IN)
     
 
     bf.initPWM(testPin, 1000)
