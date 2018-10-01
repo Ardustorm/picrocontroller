@@ -18,3 +18,8 @@ serial permissions
         sudo gpasswd --add john dialout
 	restart terminal
 
+windows install steps
+install pyhton from website
+open cmd:
+    python -m pip install --upgrade pip
+    pip install pyserial

@@ -6,8 +6,18 @@ boardfuncs.py module. resonsible for board levle functions
     ADC
 
 """
+
+
+
 VALID_PINS = ["PA" + str(i) for i in range(0,13)] \
-           + ["PB" + str(i) for i in range(0,13)] + ["PC13","PC14"]
++ ["PB" + str(i) for i in range(0,13)] + ["PC13","PC14"]
+    
+#pin modes
+GPIO_PP = "omode-pp"
+GPIO_ADC = "imode-ADC"
+GPIO_PWM = "omode-"
+GPIO_IN = "omode-float"
+
 def isPin(pin):
     """returns True if pin is a vailid suported pin False otherwise """
     return pin.upper() in VALID_PINS
@@ -24,12 +34,6 @@ class BoardFuncs(serialcom.SerialCom):
         it relies on its methods and an reliable serial connection
         could be changed to support another form of comunication
     """
-    
-    #pin modes
-    GPIO_PP = "omode-pp"
-    GPIO_ADC = "imode-ADC"
-    GPIO_PWM = "omode-"
-    GPIO_IN = "omode-float"
 
     def __init__(self, term=None, baud=115200):
         """ sets up underlying serial connection
