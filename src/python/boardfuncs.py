@@ -34,7 +34,7 @@ class BoardFuncs(SerialCom):
         could be changed to support another form of comunication
     """
 
-    def __init__(self, term=None, baud=115200):
+    def __init__(self, term=None, baud=None):
         """ sets up underlying serial connection
             term is a string that specifies serial port 
                 if ommited serches through preset list (in serialcom.py)

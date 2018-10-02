@@ -18,6 +18,9 @@ class SerialCom:
             self.logFile = open(LOG_FILE,'a')
             self.logFile.write("\n----" + str(datetime.datetime.now()) + "----\n")
         
+        if baud == None:
+            baud = 115200
+
         if term:
             self.port = serial.Serial(term, baudrate=baud, timeout=0, writeTimeout=0)
         else:
