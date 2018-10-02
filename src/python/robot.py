@@ -13,11 +13,19 @@ class Robot(boardfuncs.BoardFuncs):
         super().__repr__()
     def setup(self):
         pass
-    def loop():
+    def loop(self):
         pass
-    def end():
+    def end(self):
+        #send stop board 
         pass
-
+    def run(self):
+        try:
+            self.setup()
+            while True:
+                self.loop()
+        except e:
+            self.end()
+            raise e
 
 
 
