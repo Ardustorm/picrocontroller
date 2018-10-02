@@ -2,5 +2,7 @@ Smith Robotics Examples
 this readme lists and discribes each example python file
 ***curently requires library modules to be in local dir or in env path - will be a package***
 
-ex0_BlinkLED.py - blinks LED on pin "PB12" or "PC13"
-ex1_FadeLED.py - Fades LED using PWM pin "PA1"
+ex0_Template.py - template for students
+ex1_Prints.py - example prints in setup and loop
+ex2_BlinkLED.py - blinks LED on pin "PB12" or "PC13"
+ex3_FadeLED.py - Fades LED using PWM pin "PA1"

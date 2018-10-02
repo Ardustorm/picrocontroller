@@ -5,7 +5,7 @@ def setup():
     print("seting up")
 
 def loop():
-    print("LOOPING")
+    print("looping")
     time.sleep(1)
 
 

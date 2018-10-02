@@ -1,4 +1,13 @@
-import boradfuncs
+from boardfuncs import *
+
+def run(setup, loop):
+    try:
+        setup()
+        while True:
+            loop()
+    except e:
+        self.end()
+        raise e
 
 
 class Button():
@@ -6,7 +15,7 @@ class Button():
         pass
 
 
-class Robot(boardfuncs.BoardFuncs):
+class Robot(BoardFuncs):
     def __init__(self, term=None, baud=115200):
        super().__init__(term, baud)
     def __repr__(self):
@@ -18,17 +27,6 @@ class Robot(boardfuncs.BoardFuncs):
     def end(self):
         #send stop board 
         pass
-    def run(self):
-        try:
-            self.setup()
-            while True:
-                self.loop()
-        except e:
-            self.end()
-            raise e
-
-
-
 
 
 
