@@ -1,32 +1,27 @@
+import serialcom
 from boardfuncs import *
 
+
+serial = None
+
+def end(self):
+    #send stop board 
+    pass
+
 def run(setup, loop):
+    serial = serialcom.SerialCom()
+    
     try:
         setup()
         while True:
             loop()
-    except e:
-        self.end()
-        raise e
-
+    except:
+        end()
+        #re-raise original error
+        raise 
 
 class Button():
     def __init__(self, pin):
         pass
-
-
-class Robot(BoardFuncs):
-    def __init__(self, term=None, baud=115200):
-       super().__init__(term, baud)
     def __repr__(self):
         super().__repr__()
-    def setup(self):
-        pass
-    def loop(self):
-        pass
-    def end(self):
-        #send stop board 
-        pass
-
-
-

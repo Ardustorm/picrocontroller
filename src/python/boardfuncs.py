@@ -7,8 +7,6 @@ boardfuncs.py module. resonsible for board levle functions
 
 """
 
-
-
 VALID_PINS = ["PA" + str(i) for i in range(0,13)] \
 + ["PB" + str(i) for i in range(0,13)] + ["PC13","PC14"]
     
