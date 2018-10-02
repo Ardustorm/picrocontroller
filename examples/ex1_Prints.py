@@ -1,4 +1,4 @@
-import robot
+import picro
 import time
 
 def setup():
@@ -10,5 +10,6 @@ def loop():
 
 
 if __name__ == "__main__":
-    robot.run(setup, loop)
+    myRobot = picro.Robot()
+    myRobot.run(setup, loop)
 
