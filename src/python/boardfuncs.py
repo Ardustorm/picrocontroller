@@ -7,6 +7,8 @@ boardfuncs.py module. resonsible for board levle functions
 
 """
 
+serial = None
+
 VALID_PINS = ["PA" + str(i) for i in range(0,13)] \
 + ["PB" + str(i) for i in range(0,13)] + ["PC13","PC14"]
     
@@ -27,81 +29,59 @@ def checkPin(pin):
         raise ValueError("invalid pin: "+pin)
 
 
-class BoardFuncs(serialcom.SerialCom):
-    """BoardFuncs inherits from SerialCom 
-        it relies on its methods and an reliable serial connection
-        could be changed to support another form of comunication
+def setPinMode(pin, mode=GPIO_PP):
+    """initializes the pins on the mcu
+        pin is a string that specifies the pin on the mcu
+        mode is a string that specifies pin mode (options are defined in the class)
     """
+    checkPin(pin)
 
-    def __init__(self, term=None, baud=115200):
-        """ sets up underlying serial connection
-            term is a string that specifies serial port 
-                if ommited serches through preset list (in serialcom.py)
-            baud is an number that specifyes baud rate of serial coonection
-            raises serialException if connection could not be established
-        """
-        super().__init__(term, baud)
+    # if mode == GPIO_ADC:
+    #     serialport.write( freq, pin + " pwm-init")
+    serial.write( "omode-pp " + pin + " io-mode!")
+    serial.readLine()
 
-    def __repr__(self):
-        """prints information about underlaying serial connection
-
-        """
-        return super().__repr__()
-
-
-    def setPinMode(self, pin, mode=GPIO_PP):
-        """initializes the pins on the mcu
-            pin is a string that specifies the pin on the mcu
-            mode is a string that specifies pin mode (options are defined in the class)
-        """
-        checkPin(pin)
-
-        # if mode == GPIO_ADC:
-        #     serialport.write( freq, pin + " pwm-init")
-        self.write( "omode-pp " + pin + " io-mode!")
-        self.readLine()
-
-    def setPin(self, pin):
-        checkPin(pin)
-        self.sendCmd( pin + " ios!")
-        
-    def clearPin(self, pin):
-        checkPin(pin)
-        self.sendCmd( pin + " ioc!")
-
-    def togglePin(self, pin):
-        checkPin(pin)
-        self.sendCmd( pin + " iox!")
-
-    def readPin(self, pin):
-        checkPin(pin)
-        ret =self.sendCmd( pin + " io@ .")
-        return ret[-6] == "1"
-
-    """PWM
-    TIM1:   PA8  PA9  PA10 PA11
-    TIM2:   PA0  PA1  PA2  PA3
-    TIM3:   PA6  PA7  PB0  PB1
-    TIM4:   PB6  PB7  PB8  PB9
+def setPin(pin):
+    checkPin(pin)
+    self.sendCmd( pin + " ios!")
     
+def clearPin(pin):
+    checkPin(pin)
+    serial.sendCmd( pin + " ioc!")
+
+def togglePin(pin):
+    checkPin(pin)
+    serial.sendCmd( pin + " iox!")
+
+def readPin(pin):
+    checkPin(pin)
+    ret = serial.sendCmd( pin + " io@ .")
+    return ret[-6] == "1"
+
+"""PWM
+TIM1:   PA8  PA9  PA10 PA11
+TIM2:   PA0  PA1  PA2  PA3
+TIM3:   PA6  PA7  PB0  PB1
+TIM4:   PB6  PB7  PB8  PB9
+
+"""
+def initPWM(pin, freq=1000):
+    """sets up PWM on a specifyed pin
+        freq is in Hz
+
+
     """
-    def initPWM(self, pin, freq=1000):
-        """sets up PWM on a specifyed pin
-            freq is in Hz
-
-
-        """
-        
-        checkPin(pin)
-        self.sendCmd(str(freq) + " " + pin + " pwm-init")
-        self.setPWM(pin,0)
-
-    def setPWM(self, pin, duty):
-        """sets PWM duty on pin at duty/10000
     
-        """
-        checkPin(pin)
-        self.sendCmd(str(duty) + " " + pin + " pwm")
+    checkPin(pin)
+    serial.sendCmd(str(freq) + " " + pin + " pwm-init")
+    serial.setPWM(pin,0)
+
+def setPWM(pin, duty):
+    """sets PWM duty on pin at duty/10000
+
+    """
+    checkPin(pin)
+    serial.sendCmd(str(duty) + " " + pin + " pwm")
 
 
 
