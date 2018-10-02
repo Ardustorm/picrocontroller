@@ -10,8 +10,8 @@ LEDPin2 = "PC13"
 bf = boardfuncs.BoardFuncs()
 
 #set LED pins to output mode (general purpose input output push pull)
-bf.setUpPin(LEDPin1, boardfuncs.GPIO_PP)
-bf.setUpPin(LEDPin2, boardfuncs.GPIO_PP)
+bf.setPinMode(LEDPin1, boardfuncs.GPIO_PP)
+bf.setPinMode(LEDPin2, boardfuncs.GPIO_PP)
 
 #print to user
 print("Blinking LED")

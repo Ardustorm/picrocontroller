@@ -10,11 +10,11 @@ PWMPin1 = "PA1"
 bf = boardfuncs.BoardFuncs()
 
 #set LED pins to inputs
-bf.setPinMode(LEDPin1, bf.GPIO_IN)
-bf.setPinMode(LEDPin2, bf.GPIO_IN)
+bf.setPinMode(LEDPin1, boardfuncs.GPIO_IN)
+bf.setPinMode(LEDPin2, boardfuncs.GPIO_IN)
 
 #init PWM pin clock freq (Hz)
-bf.initPWM(testPin, 1000)
+bf.initPWM(PWMPin1, 1000)
 
 #print to user
 print("Fading LED")
