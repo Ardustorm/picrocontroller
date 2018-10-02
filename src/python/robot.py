@@ -1,10 +1,9 @@
 import serialcom
 from boardfuncs import *
 
-
 serial = None
 
-def end(self):
+def end():
     #send stop board 
     pass
 
@@ -16,6 +15,7 @@ def run(setup, loop):
         while True:
             loop()
     except:
+        #note two or more ctr-c will skip clean-up code
         end()
         #re-raise original error
         raise 
