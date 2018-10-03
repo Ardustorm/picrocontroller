@@ -14,10 +14,10 @@ class Robot(BoardFuncs):
         try:
             setup()
             while True:
-            loop()
+                loop()
         except:
             #note two or more ctr-c will skip clean-up code
-            end()
+            self.end()
             #re-raise original error
             raise 
 

@@ -17,9 +17,9 @@ def setup():
     
     #print to user
     print("Fading LED")
-    i=10000
 
 def loop():
+    i = 10000
     while i > 0:
         #set duty cycle of PWM pin 0-10000
         myRobot.setPWM(PWMPin1, i)
