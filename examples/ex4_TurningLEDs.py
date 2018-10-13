@@ -2,8 +2,8 @@ import picro
 import time
 
 #define pin names to use
-LEDPin1 = "PB12"
-LEDPin2 = "PC13"
+LEDPin1 = "PA4"
+LEDPin2 = "PA5"
 
 #def state vars
 currentState = 0
@@ -11,20 +11,20 @@ doneTime = 0
 
 #def states of LEDS
 def straight():
-    myRobot.clearPin(LEDPin1)
-    myRobot.clearPin(LEDPin2)
+    myRobot.setPin(LEDPin1)
+    myRobot.setPin(LEDPin2)
 
 def right():
-    myRobot.setPin(LEDPin1)
-    myRobot.clearPin(LEDPin2)
-    
-def left():
     myRobot.clearPin(LEDPin1)
     myRobot.setPin(LEDPin2)
+    
+def left():
+    myRobot.setPin(LEDPin1)
+    myRobot.clearPin(LEDPin2)
 
 def stop():
-    myRobot.setPin(LEDPin1)
-    myRobot.setPin(LEDPin2)
+    myRobot.clearPin(LEDPin1)
+    myRobot.clearPin(LEDPin2)
 
 def setup():
     #set LED pins to inputs

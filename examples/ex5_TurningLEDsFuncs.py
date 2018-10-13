@@ -2,8 +2,8 @@ import picro
 import time
 
 #define pin names to use
-LEDPin1 = "PB12"
-LEDPin2 = "PC13"
+LEDPin1 = "PA4"
+LEDPin2 = "PA5"
 
 #states are defined at top  
 def straight():
@@ -13,8 +13,8 @@ def straight():
     global doneTime
     
     #set leds, set time till next state, increment state count, and set next state
-    myRobot.clearPin(LEDPin1)
-    myRobot.clearPin(LEDPin2)
+    myRobot.setPin(LEDPin1)
+    myRobot.setPin(LEDPin2)
     doneTime = time.time() + 3
     stateCount += 1
     if(stateCount == 1 or stateCount == 7):
@@ -22,7 +22,7 @@ def straight():
     elif(stateCount == 3 or stateCount == 5):
         nextState = left
     else:
-        print("All Done")
+        print("Final State")
         nextState = done
 
 def right():
@@ -32,8 +32,8 @@ def right():
     global doneTime
     
     #set leds, set time till next state, increment state count, and set next state
-    myRobot.setPin(LEDPin1)
-    myRobot.clearPin(LEDPin2)
+    myRobot.clearPin(LEDPin1)
+    myRobot.setPin(LEDPin2)
     doneTime = time.time() + 1.5
     stateCount += 1
     nextState = straight
@@ -45,15 +45,15 @@ def left():
     global doneTime
     
     #set leds, set time till next state, increment state count, and set next state
-    myRobot.clearPin(LEDPin1)
-    myRobot.setPin(LEDPin2)
+    myRobot.setPin(LEDPin1)
+    myRobot.clearPin(LEDPin2)
     doneTime = time.time() + 1.5
     stateCount += 1
     nextState = straight
 
 def done():
-    myRobot.setPin(LEDPin1)
-    myRobot.setPin(LEDPin2)
+    myRobot.clearPin(LEDPin1)
+    myRobot.clearPin(LEDPin2)
 
 #def state varibles after state defs
 nextState = straight

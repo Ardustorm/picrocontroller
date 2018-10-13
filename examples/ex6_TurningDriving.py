@@ -2,10 +2,10 @@ import picro
 import time
 
 #define pin names to use
-LEDPin1 = "PB12"
-LEDPin2 = "PC13"
+LEDPin1 = "PA4"
+LEDPin2 = "PA5"
 PWMPin1 = "PA1"
-PWMPin2 = "PA8"
+PWMPin2 = "PA6"
 
 #PWM duty cycle
 PWMSpeed = 2500
@@ -18,8 +18,8 @@ def straight():
     global doneTime
     
     #set leds and PWM, set time till next state, increment state count, and set next state
-    myRobot.clearPin(LEDPin1)
-    myRobot.clearPin(LEDPin2)
+    myRobot.setPin(LEDPin1)
+    myRobot.setPin(LEDPin2)
     myRobot.setPWM(PWMPin1, PWMSpeed)
     myRobot.setPWM(PWMPin2, PWMSpeed)
     
@@ -30,7 +30,7 @@ def straight():
     elif(stateCount == 3 or stateCount == 5):
         nextState = left
     else:
-        print("All Done")
+        print("Final State")
         nextState = done
 
 def right():
@@ -40,9 +40,9 @@ def right():
     global doneTime
     
     #set leds and PWM, set time till next state, increment state count, and set next state
-    myRobot.setPin(LEDPin1)
-    myRobot.clearPin(LEDPin2)
-    myRobot.setPWM(PWMPin1, PWMSpeed)
+    myRobot.clearPin(LEDPin1)
+    myRobot.setPin(LEDPin2)
+    myRobot.setPWM(PWMPin1, 2*PWMSpeed)
     myRobot.setPWM(PWMPin2, 0)
     
     doneTime = time.time() + 1.5
@@ -56,18 +56,18 @@ def left():
     global doneTime
     
     #set leds and PWM, set time till next state, increment state count, and set next state
-    myRobot.clearPin(LEDPin1)
-    myRobot.setPin(LEDPin2)
+    myRobot.setPin(LEDPin1)
+    myRobot.clearPin(LEDPin2)
     myRobot.setPWM(PWMPin1, 0)
-    myRobot.setPWM(PWMPin2, PWMSpeed)
+    myRobot.setPWM(PWMPin2, 2*PWMSpeed)
     
     doneTime = time.time() + 1.5
     stateCount += 1
     nextState = straight
 
 def done():
-    myRobot.setPin(LEDPin1)
-    myRobot.setPin(LEDPin2)
+    myRobot.clearPin(LEDPin1)
+    myRobot.clearPin(LEDPin2)
     myRobot.setPWM(PWMPin1, 0)
     myRobot.setPWM(PWMPin2, 0)
 
