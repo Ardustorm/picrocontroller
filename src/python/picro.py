@@ -7,6 +7,7 @@ class Robot(BoardFuncs):
         super().__init__(term, baud)
     
     def end(self):
+        self.reset()
         #send stop board 
         pass
     

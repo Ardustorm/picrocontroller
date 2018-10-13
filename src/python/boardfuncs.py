@@ -47,7 +47,9 @@ class BoardFuncs(SerialCom):
         """prints information about underlaying serial connection
         """
         return super().__repr__()
-
+    
+    def reset(self):
+        self.sendCmd("reset")
 
     def setPinMode(self, pin, mode=GPIO_PP):
         """initializes the pins on the mcu
