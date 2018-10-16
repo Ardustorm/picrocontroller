@@ -1,6 +1,5 @@
 from boardfuncs import *
-
-
+from button inport *
 
 class Robot(BoardFuncs):
     def __init__(self, term=None, baud=None):
@@ -22,8 +21,4 @@ class Robot(BoardFuncs):
             #re-raise original error
             raise 
 
-class Button():
-    def __init__(self, pin):
-        pass
-    def __repr__(self):
-        super().__repr__()
+
