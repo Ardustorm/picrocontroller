@@ -1,0 +1,13 @@
+sudo apt install net-tools
+ifconfig wlan0
+iwconfig wlan0 essid WiFiSetup
+dhclient wlan0
+
+##run bash script
+
+##login in browser?
+
+###connect to SecureMustangWireless
+
+
+
