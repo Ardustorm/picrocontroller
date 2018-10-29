@@ -2,7 +2,13 @@ Smith Robotics Examples
 this readme lists and discribes each example python file
 ***curently requires library modules to be in local dir or in env path - will be a package***
 
-ex0_Template.py - template for students
-ex1_Prints.py - example prints in setup and loop
-ex2_BlinkLED.py - blinks LED on pin "PB12" or "PC13"
-ex3_FadeLED.py - Fades LED using PWM pin "PA1"
+LiveTerminal.py - can be run with python3 -i LiveTerminal.py and keeps the interperter open for real time interaction 
+
+ex0_Template.py          - template for students
+ex1_Prints.py            - example prints in setup and loop
+ex2_BlinkLED.py          - blinks LED on pin "PB12" or "PC13"
+ex3_FadeLED.py           - fades LED using PWM pin "PA1"
+ex4_TurningLEDs.py       - simple state machine LED show turing or staight follows smiths path
+ex5_TuringLEDsFuncs.py   - same functionaly as ex4 using functions to store state info
+ex6_TuringDriving.py     - state machine like ex5 but also drives motors to match path
+
