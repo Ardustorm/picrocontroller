@@ -52,3 +52,13 @@ done or that need to be done/documented.
   cornerstone <<picrocontroller>>
   compiletoram
 #+END_SRC
+
+
+* To get usb gadget working
+  I followed this guide for setting up usb serial gadget and it
+  worked perfectly. It also has instructions on how to modify the
+  downloaded image if you are going to be flashing multiple of sd cards.
+  
+  https://www.tal.org/tutorials/raspberry-pi-zero-usb-serial-console
+
+  
