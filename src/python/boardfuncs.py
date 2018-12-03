@@ -28,6 +28,25 @@ def checkPin(pin):
         raise ValueError("invalid pin: "+pin)
 
 
+
+class Button():
+    """Meant to be created from BoardFuncs
+    
+    """
+    
+    def __init__(self, boardfuncs, pin):
+        if(not issubclass(boardfuncs, BoardFuncs)):
+            raise TypeError("first argument must be class containg serial comunication (Robot or BoardFuncs)") 
+        if(isPin(pin)):
+            self.pin = pin
+        else:
+            raise ValueError("invalid pin: "+pin)
+    def __repr__(self):
+        return self.pin
+    def isPressed(self):
+        return boardfuncs.checkPin(self.pin); 
+
+
 class BoardFuncs(SerialCom):
     """BoardFuncs inherits from SerialCom 
         it relies on its methods and an reliable serial connection
@@ -46,8 +65,13 @@ class BoardFuncs(SerialCom):
     def __repr__(self):
         """prints information about underlaying serial connection
         """
-        return super().__repr__()
-    
+        return super().__repr__()    
+    def Button(self, pin):
+        """ wrapper function for button constructor to avoid users having to pass 
+            serial connection to button constructor
+        
+        """
+        return Button(self,pin)   
     def reset(self):
         self.sendCmd("reset")
 

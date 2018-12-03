@@ -1,5 +1,4 @@
 from boardfuncs import *
-from button inport *
 
 class Robot(BoardFuncs):
     def __init__(self, term=None, baud=None):
