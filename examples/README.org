@@ -1,6 +1,6 @@
 Smith Robotics Examples
 this readme lists and discribes each example python file
-***curently requires library modules to be in local dir or in env path - will be a package***
+***curently requires library modules to be in local dir or in env path***
 
 LiveTerminal.py - can be run with python3 -i LiveTerminal.py and keeps the interperter open for real time interaction 
 
