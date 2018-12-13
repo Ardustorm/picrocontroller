@@ -71,6 +71,15 @@ class SerialCom:
         self.write(txt)
         return self.readLine()
     
+    def sendFile(self, filename):
+        """ used to put code onto the Forth board without having to flash it
+        
+        """
+        f = Open(filename,"r")
+        for line in f:
+            sendCmd(line)
+    
+    
     def readLine(self):
         while ("\n" not in self.line):
             self.line += self.port.read(max(1,self.port.in_waiting) ).decode('UTF-8')

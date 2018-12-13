@@ -49,6 +49,7 @@ class Button():
             self.pin = pin
         else:
             raise ValueError("invalid pin: "+pin)
+        self.boardfuncs.sendCmd()      
     def __repr__(self):
         return str(self.pin)
     def isPressed(self):
@@ -69,12 +70,17 @@ class Encoder():
             self.pin = pin
         else:
             raise ValueError("invalid pin: "+pin)
+        self.boardfuncs.sendFile("encoder_test.fs") 
+        # call init funtions
+        self.boardfuncs.sendFile("pb4-init")
+        self.boardfuncs.sendFile("pb5-init")
+        
     def __repr__(self):
         return str(self.pin)
     def read():
-        return count
+        return self.boardfuncs.sendCmd("leftCount?")
     def reset():
-        self.count=0
+        self.boardfuncs.sendCmd("count0")
         
         
 class BoardFuncs(SerialCom):
