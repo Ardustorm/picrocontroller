@@ -34,19 +34,49 @@ class Button():
     
     """
     
+    
+    
     def __init__(self, boardfuncs, pin):
+        """ Needs boardfuncs as an argument to use the serial comunication link
+        A wraper for this constructor is in BoardFuncs so users don't 
+        need to worry about the extra argument
+    
+        """
         if(not issubclass(boardfuncs, BoardFuncs)):
             raise TypeError("first argument must be class containg serial comunication (Robot or BoardFuncs)") 
+        self.boardfuncs = boardfuncs
         if(isPin(pin)):
             self.pin = pin
         else:
             raise ValueError("invalid pin: "+pin)
     def __repr__(self):
-        return self.pin
+        return str(self.pin)
     def isPressed(self):
-        return boardfuncs.checkPin(self.pin); 
+        return self.boardfuncs.checkPin(self.pin); 
 
+class Encoder():
 
+    def __init__(self, boardfuncs, pin): 
+    """ Needs boardfuncs as an argument to use the serial comunication link
+        A wraper for this constructor is in BoardFuncs so users don't 
+        need to worry about the extra argument
+    
+    """
+        if(not issubclass(boardfuncs, BoardFuncs)):
+            raise TypeError("first argument must be class containg serial comunication (Robot or BoardFuncs)") 
+        self.boardfuncs = boardfuncs
+        if(isPin(pin)):
+            self.pin = pin
+        else:
+            raise ValueError("invalid pin: "+pin)
+    def __repr__(self):
+        return str(self.pin)
+    def read():
+        return count
+    def reset():
+        self.count=0
+        
+        
 class BoardFuncs(SerialCom):
     """BoardFuncs inherits from SerialCom 
         it relies on its methods and an reliable serial connection
@@ -69,9 +99,15 @@ class BoardFuncs(SerialCom):
     def Button(self, pin):
         """ wrapper function for button constructor to avoid users having to pass 
             serial connection to button constructor
-        
         """
-        return Button(self,pin)   
+        return Button(self, pin)   
+    def Encoder(self, pin):
+        """ wrapper function for button constructor to avoid users having to pass 
+            serial connection to button constructor
+        """
+        return Encoder(self, pin)
+    
+    
     def reset(self):
         self.sendCmd("reset")
 
